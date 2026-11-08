@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <div class="disclaimer">
+    ⚠️ MindEase is a support tool, not a replacement for professional therapy.
+    In crisis? Call <strong>800-HOPE (4673)</strong> — free and available 24/7 across the UAE.
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">🎓 Built for University Students</div>
+    <h1>Your Mind Deserves<br/>Care Too 💚</h1>
+    <p>MindEase is a free, anonymous AI wellness companion that helps you understand
+    your emotions, track your mood, and find support — anytime, anywhere.</p>
+    <a href="/wellness" class="btn btn-primary">Start Wellness Check →</a>
+  </div>
+
+  <div class="hero-cards">
+    <a href="/wellness" class="hero-card">
+      <span class="hero-card-icon">🧠</span>
+      <h3>AI Wellness Check</h3>
+      <p>Type how you feel and get instant emotional feedback</p>
+    </a>
+    <a href="/mood" class="hero-card">
+      <span class="hero-card-icon">📊</span>
+      <h3>Mood Tracker</h3>
+      <p>Log your daily mood and see your patterns</p>
+    </a>
+    <a href="/journal" class="hero-card">
+      <span class="hero-card-icon">📓</span>
+      <h3>Journal</h3>
+      <p>Write freely in your private anonymous space</p>
+    </a>
+    <a href="/resources" class="hero-card">
+      <span class="hero-card-icon">💡</span>
+      <h3>Resources</h3>
+      <p>Breathing exercises, tips and crisis contacts</p>
+    </a>
+  </div>
+
+</div>
+{% endblock %}

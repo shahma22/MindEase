@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Mood Tracker{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <!-- Daily Quote Card — appears after mood is logged -->
+  {% if quote %}
+  <div style="
+    background   : linear-gradient(135deg, var(--primary-lt), var(--accent-lt));
+    border       : 1px solid var(--border);
+    border-radius: var(--radius);
+    padding      : 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    text-align   : center;
+    animation    : fadeSlideUp 0.5s ease;
+  ">
+    <div style="font-size:2rem; margin-bottom:0.5rem;">{{ quote.emoji }}</div>
+    <p style="font-size:1.05rem; font-weight:600; color:var(--text);
+              line-height:1.7; margin-bottom:0.5rem; font-style:italic;">
+      "{{ quote.text }}"
+    </p>
+    <p style="font-size:0.85rem; color:var(--text-light);">
+      — {{ quote.author }}
+    </p>
+    <div style="margin-top:0.75rem; font-size:0.82rem; color:var(--primary); font-weight:600;">
+      Based on your {{ quote.mood }} mood 💚
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="page-header">
+    <h1>📊 Mood Tracker</h1>
+    <p>How are you feeling right now? Select a mood and it will be saved to your history.</p>
+  </div>
+
+  <div class="card">
+    <form method="POST" action="/mood">
+
+      {% if error %}
+        <div class="error-msg">⚠️ {{ error }}</div>
+      {% endif %}
+
+      <label>Select your current mood</label>
+
+      <div class="mood-grid">
+        <button type="submit" name="mood_type" value="Happy" class="mood-btn">
+          <span>😊</span> Happy
+        </button>
+        <button type="submit" name="mood_type" value="Excited" class="mood-btn">
+          <span>🤩</span> Excited
+        </button>
+        <button type="submit" name="mood_type" value="Grateful" class="mood-btn">
+          <span>🙏</span> Grateful
+        </button>
+        <button type="submit" name="mood_type" value="Neutral" class="mood-btn">
+          <span>😐</span> Neutral
+        </button>
+        <button type="submit" name="mood_type" value="Tired" class="mood-btn">
+          <span>😴</span> Tired
+        </button>
+        <button type="submit" name="mood_type" value="Anxious" class="mood-btn">
+          <span>😟</span> Anxious
+        </button>
+        <button type="submit" name="mood_type" value="Sad" class="mood-btn">
+          <span>😔</span> Sad
+        </button>
+        <button type="submit" name="mood_type" value="Stressed" class="mood-btn">
+          <span>😰</span> Stressed
+        </button>
+        <button type="submit" name="mood_type" value="Overwhelmed" class="mood-btn">
+          <span>🤯</span> Overwhelmed
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Mood History -->
+  <div class="section-title">📅 Recent Mood History</div>
+
+  {% if moods %}
+    {% for m in moods %}
+    <div class="mood-item fade-in">
+
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <span style="font-size:2rem;">
+          {% if m.mood_type == 'Happy'        %}😊
+          {% elif m.mood_type == 'Excited'    %}🤩
+          {% elif m.mood_type == 'Grateful'   %}🙏
+          {% elif m.mood_type == 'Neutral'    %}😐
+          {% elif m.mood_type == 'Tired'      %}😴
+          {% elif m.mood_type == 'Anxious'    %}😟
+          {% elif m.mood_type == 'Sad'        %}😔
+          {% elif m.mood_type == 'Stressed'   %}😰
+          {% elif m.mood_type == 'Overwhelmed'%}🤯
+          {% endif %}
+        </span>
+        <div>
+          <div style="font-weight:700; font-size:1rem;">{{ m.mood_type }}</div>
+          <div class="text-muted">{{ m.date }}</div>
+        </div>
+      </div>
+
+      <form method="POST" action="/mood/delete/{{ m.id }}"
+            onsubmit="return confirm('Delete this entry?')">
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
+
+    </div>
+    {% endfor %}
+
+  {% else %}
+    <div class="empty-state">
+      <span class="empty-icon">🌱</span>
+      <p>No mood entries yet. Select a mood above to get started!</p>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,589 @@
+/* ============================================================
+   MindEase — Upgraded Stylesheet
+   Modern, beautiful, calming mental health theme
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary    : #2ec4b6;
+  --primary-dk : #21a99d;
+  --primary-lt : #e0f7f5;
+  --accent     : #ff9f1c;
+  --accent-lt  : #fff3e0;
+  --text       : #1a2e2d;
+  --text-light : #6b8e8c;
+  --bg         : #f0fafa;
+  --white      : #ffffff;
+  --border     : #cceae7;
+  --shadow-sm  : 0 2px 12px rgba(46,196,182,0.10);
+  --shadow-md  : 0 8px 32px rgba(46,196,182,0.15);
+  --radius     : 18px;
+  --radius-sm  : 10px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background : var(--bg);
+  color      : var(--text);
+  line-height: 1.7;
+  min-height : 100vh;
+}
+
+/* ── Navigation ── */
+nav {
+  background   : rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding      : 0 2.5rem;
+  height       : 70px;
+  display      : flex;
+  align-items  : center;
+  justify-content: space-between;
+  position     : sticky;
+  top          : 0;
+  z-index      : 100;
+  box-shadow   : var(--shadow-sm);
+}
+
+.nav-brand {
+  font-size    : 1.5rem;
+  font-weight  : 800;
+  background   : linear-gradient(135deg, var(--primary), #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.nav-links {
+  display   : flex;
+  gap       : 0.25rem;
+  list-style: none;
+}
+
+.nav-links a {
+  padding        : 0.5rem 1rem;
+  border-radius  : var(--radius-sm);
+  font-weight    : 500;
+  font-size      : 0.9rem;
+  color          : var(--text-light);
+  text-decoration: none;
+  transition     : all 0.2s ease;
+}
+
+.nav-links a:hover {
+  background: var(--primary-lt);
+  color     : var(--primary);
+  transform : translateY(-1px);
+}
+
+/* ── Page Wrapper ── */
+.page {
+  max-width: 860px;
+  margin   : 0 auto;
+  padding  : 3rem 1.5rem 5rem;
+}
+
+/* ── Page Header ── */
+.page-header {
+  text-align   : center;
+  margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+  font-size    : 2.2rem;
+  font-weight  : 800;
+  color        : var(--text);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.page-header p {
+  color    : var(--text-light);
+  font-size: 1.05rem;
+  max-width: 500px;
+  margin   : 0 auto;
+}
+
+/* ── Cards ── */
+.card {
+  background   : var(--white);
+  border-radius: var(--radius);
+  padding      : 2rem;
+  border       : 1px solid var(--border);
+  box-shadow   : var(--shadow-sm);
+  margin-bottom: 1.5rem;
+  transition   : box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform : translateY(-2px);
+}
+
+/* ── Forms ── */
+textarea, input[type="text"], input[type="password"], input[type="email"] {
+  width        : 100%;
+  border       : 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding      : 0.9rem 1.1rem;
+  font-family  : 'Poppins', sans-serif;
+  font-size    : 0.95rem;
+  color        : var(--text);
+  background   : var(--bg);
+  transition   : border-color 0.2s, box-shadow 0.2s;
+  outline      : none;
+  resize       : vertical;
+}
+
+textarea:focus,
+input:focus {
+  border-color: var(--primary);
+  box-shadow  : 0 0 0 3px rgba(46,196,182,0.15);
+  background  : var(--white);
+}
+
+label {
+  font-weight  : 600;
+  font-size    : 0.92rem;
+  display      : block;
+  margin-bottom: 0.5rem;
+  color        : var(--text);
+}
+
+/* ── Buttons ── */
+.btn {
+  display        : inline-block;
+  padding        : 0.75rem 2rem;
+  border-radius  : var(--radius-sm);
+  font-family    : 'Poppins', sans-serif;
+  font-size      : 0.95rem;
+  font-weight    : 700;
+  cursor         : pointer;
+  border         : none;
+  text-decoration: none;
+  transition     : all 0.2s ease;
+  letter-spacing : 0.2px;
+}
+
+.btn-primary {
+  background   : linear-gradient(135deg, var(--primary), #0ea5e9);
+  color        : var(--white);
+  box-shadow   : 0 4px 15px rgba(46,196,182,0.35);
+}
+
+.btn-primary:hover {
+  transform : translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46,196,182,0.45);
+}
+
+.btn-sm {
+  padding  : 0.4rem 1rem;
+  font-size: 0.82rem;
+}
+
+.btn-danger {
+  background: #fef0f0;
+  color     : #e05050;
+}
+
+.btn-danger:hover {
+  background: #fde0e0;
+  transform : translateY(-1px);
+}
+
+/* ── Error and Success ── */
+.error-msg {
+  background   : #fef0f0;
+  color        : #c0504d;
+  border       : 1px solid #f5c6c6;
+  border-radius: var(--radius-sm);
+  padding      : 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size    : 0.92rem;
+  font-weight  : 500;
+}
+
+/* ── Hero Section ── */
+.hero {
+  text-align: center;
+  padding   : 1rem 1rem 2rem;
+  position  : relative;
+}
+
+.hero-badge {
+  display      : inline-block;
+  background   : var(--primary-lt);
+  color        : var(--primary);
+  border-radius: 50px;
+  padding      : 0.35rem 1.1rem;
+  font-size    : 0.82rem;
+  font-weight  : 600;
+  margin-bottom: 1.25rem;
+  border       : 1px solid var(--border);
+}
+
+.hero h1 {
+  font-size    : 3rem;
+  font-weight  : 800;
+  line-height  : 1.15;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+  background   : linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size    : 1.1rem;
+  color        : var(--text-light);
+  max-width    : 520px;
+  margin       : 0 auto 2rem;
+}
+
+/* ── Feature Cards Grid ── */
+.hero-cards {
+  display              : grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap                  : 1.25rem;
+  margin-top           : 2.5rem;
+}
+
+.hero-card {
+  background     : var(--white);
+  border-radius  : var(--radius);
+  padding        : 1.75rem 1.25rem;
+  border         : 1px solid var(--border);
+  text-align     : center;
+  text-decoration: none;
+  color          : var(--text);
+  transition     : all 0.25s ease;
+  box-shadow     : var(--shadow-sm);
+  position       : relative;
+  overflow       : hidden;
+}
+
+.hero-card::before {
+  content   : '';
+  position  : absolute;
+  top       : 0; left: 0; right: 0;
+  height    : 3px;
+  background: linear-gradient(90deg, var(--primary), #0ea5e9);
+  transform : scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover {
+  transform : translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-card:hover::before { transform: scaleX(1); }
+
+.hero-card-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+.hero-card h3   { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+.hero-card p    { font-size: 0.85rem; color: var(--text-light); }
+
+/* ── Disclaimer ── */
+.disclaimer {
+  background   : linear-gradient(135deg, #fff8e6, #fff3d4);
+  border       : 1px solid #f5dfa0;
+  border-radius: var(--radius-sm);
+  padding      : 1rem 1.5rem;
+  font-size    : 0.88rem;
+  color        : #7a6020;
+  margin-bottom: 2rem;
+  text-align   : center;
+  font-weight  : 500;
+}
+
+/* ── Wellness Result ── */
+.result-card {
+  border-radius: var(--radius);
+  padding      : 2.5rem 2rem;
+  margin-top   : 1.5rem;
+  text-align   : center;
+  animation    : fadeSlideUp 0.5s ease;
+}
+
+.result-card.positive { background: linear-gradient(135deg, #edfbf0, #d4f5dc); border: 2px solid #a8e6b8; }
+.result-card.negative { background: linear-gradient(135deg, #eef0fb, #dde2f8); border: 2px solid #b8c4f0; }
+.result-card.neutral  { background: linear-gradient(135deg, #f0f7ed, #e2f0da); border: 2px solid #bcd9ac; }
+
+.result-emoji { font-size: 4rem; margin-bottom: 0.75rem; display: block; }
+
+.result-label {
+  font-size    : 1.6rem;
+  font-weight  : 800;
+  margin-bottom: 0.5rem;
+}
+
+.result-label.positive { color: #2e7d4e; }
+.result-label.negative { color: #4a5bbf; }
+.result-label.neutral  { color: #4a7a30; }
+
+.result-polarity {
+  display      : inline-block;
+  background   : rgba(255,255,255,0.7);
+  border-radius: 50px;
+  padding      : 0.3rem 1rem;
+  font-size    : 0.82rem;
+  color        : var(--text-light);
+  margin-bottom: 1.25rem;
+  font-weight  : 500;
+}
+
+.result-message {
+  font-size  : 0.97rem;
+  line-height: 1.8;
+  color      : var(--text);
+  text-align : left;
+  background : rgba(255,255,255,0.6);
+  border-radius: var(--radius-sm);
+  padding    : 1.25rem;
+  margin-top : 1rem;
+}
+
+/* ── Mood Buttons ── */
+.mood-grid {
+  display              : grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap                  : 1rem;
+  margin               : 1.25rem 0 1.5rem;
+}
+
+.mood-btn {
+  padding        : 1.25rem 0.75rem;
+  border-radius  : var(--radius);
+  border         : 2px solid var(--border);
+  background     : var(--white);
+  font-family    : 'Poppins', sans-serif;
+  font-size      : 0.9rem;
+  font-weight    : 600;
+  cursor         : pointer;
+  transition     : all 0.2s ease;
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  gap            : 0.4rem;
+  box-shadow     : var(--shadow-sm);
+}
+
+.mood-btn span { font-size: 1.75rem; }
+
+.mood-btn:hover {
+  transform   : translateY(-3px);
+  box-shadow  : var(--shadow-md);
+  border-color: var(--primary);
+  background  : var(--primary-lt);
+}
+
+/* ── Mood History Items ── */
+.mood-item {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  padding        : 1rem 1.25rem;
+  border-radius  : var(--radius-sm);
+  margin-bottom  : 0.75rem;
+  background     : var(--white);
+  border         : 1px solid var(--border);
+  box-shadow     : var(--shadow-sm);
+  transition     : transform 0.2s;
+}
+
+.mood-item:hover { transform: translateX(4px); }
+
+/* ── Journal Entries ── */
+.journal-entry {
+  background     : var(--white);
+  border-radius  : var(--radius);
+  border         : 1px solid var(--border);
+  border-left    : 5px solid var(--primary);
+  padding        : 1.5rem;
+  margin-bottom  : 1.25rem;
+  box-shadow     : var(--shadow-sm);
+  transition     : transform 0.2s, box-shadow 0.2s;
+  animation      : fadeSlideUp 0.4s ease;
+}
+
+.journal-entry:hover {
+  transform : translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.journal-date {
+  font-size    : 0.8rem;
+  color        : var(--text-light);
+  margin-bottom: 0.75rem;
+  font-weight  : 500;
+  display      : flex;
+  align-items  : center;
+  gap          : 0.4rem;
+}
+
+.journal-text {
+  font-size  : 0.97rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  color      : var(--text);
+}
+
+/* ── Resource Cards ── */
+.resource-grid {
+  display              : grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap                  : 1.5rem;
+}
+
+.resource-card {
+  background   : var(--white);
+  border-radius: var(--radius);
+  padding      : 1.75rem;
+  border       : 1px solid var(--border);
+  box-shadow   : var(--shadow-sm);
+  transition   : all 0.25s ease;
+  position     : relative;
+  overflow     : hidden;
+}
+
+.resource-card::after {
+  content   : '';
+  position  : absolute;
+  bottom    : 0; left: 0; right: 0;
+  height    : 3px;
+  background: linear-gradient(90deg, var(--primary), #0ea5e9);
+  transform : scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.resource-card:hover {
+  transform : translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.resource-card:hover::after { transform: scaleX(1); }
+
+.resource-card h3 {
+  color        : var(--text);
+  font-size    : 1rem;
+  font-weight  : 700;
+  margin-bottom: 1rem;
+  display      : flex;
+  align-items  : center;
+  gap          : 0.5rem;
+}
+
+.resource-card ul {
+  padding-left: 1.1rem;
+  color       : var(--text-light);
+  font-size   : 0.9rem;
+}
+
+.resource-card ul li { margin-bottom: 0.5rem; }
+
+/* ── Section Titles ── */
+.section-title {
+  font-size    : 1.2rem;
+  font-weight  : 800;
+  color        : var(--text);
+  margin-bottom: 1.25rem;
+  display      : flex;
+  align-items  : center;
+  gap          : 0.5rem;
+}
+
+.section-title::after {
+  content   : '';
+  flex      : 1;
+  height    : 2px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* ── Footer ── */
+footer {
+  text-align : center;
+  padding    : 2.5rem 1rem;
+  font-size  : 0.85rem;
+  color      : var(--text-light);
+  border-top : 1px solid var(--border);
+  margin-top : 3rem;
+  background : var(--white);
+}
+
+footer strong { color: var(--primary); }
+
+/* ── Animations ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeSlideUp 0.5s ease; }
+
+/* ── Utilities ── */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.text-muted  { color: var(--text-light); font-size: 0.88rem; }
+.text-center { text-align: center; }
+
+.empty-state {
+  text-align   : center;
+  padding      : 3rem 1rem;
+  color        : var(--text-light);
+}
+
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .hero h1       { font-size: 2rem; }
+  .mood-grid     { grid-template-columns: repeat(2, 1fr); }
+  .nav-links a   { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
+  .page          { padding: 1.5rem 1rem 3rem; }
+}
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+html.dark {
+  --primary    : #2ec4b6;
+  --primary-dk : #21a99d;
+  --primary-lt : #1a3a38;
+  --accent     : #ff9f1c;
+  --text       : #e8f5f3;
+  --text-light : #8ab8b4;
+  --bg         : #0f1f1e;
+  --white      : #1a2e2d;
+  --border     : #2a4a48;
+  --shadow-sm  : 0 2px 12px rgba(0,0,0,0.3);
+  --shadow-md  : 0 8px 32px rgba(0,0,0,0.4);
+}
+
+html.dark body         { background: var(--bg); color: var(--text); }
+html.dark nav          { background: rgba(26,46,45,0.95); border-color: var(--border); }
+html.dark .card        { background: var(--white); border-color: var(--border); }
+html.dark textarea,
+html.dark input        { background: #0f1f1e; border-color: var(--border); color: var(--text); }
+html.dark textarea:focus,
+html.dark input:focus  { background: #1a2e2d; }
+html.dark .hero-card   { background: var(--white); border-color: var(--border); }
+html.dark .disclaimer  { background: #2a2010; border-color: #4a3a10; color: #c8a840; }
+html.dark .mood-btn    { background: var(--white); border-color: var(--border); color: var(--text); }
+html.dark .mood-item   { background: var(--white); border-color: var(--border); }
+html.dark .journal-entry { background: var(--white); border-color: var(--border); }
+html.dark .resource-card { background: var(--white); border-color: var(--border); }
+html.dark footer       { background: var(--white); border-color: var(--border); }
+html.dark #chat-window { background: var(--white); border-color: var(--border); }
+html.dark .bot-bubble  { background: var(--primary-lt); border-color: var(--border); }
+html.dark #dark-toggle { border-color: var(--border); color: var(--text-light); }
+html.dark .fuzzy-level { background: #0f1f1e; border-color: var(--border); color: var(--text-light); }
+html.dark #sentiment-bar > div { background: var(--white); border-color: var(--border); }
+html.dark .error-msg   { background: #2a1010; border-color: #4a2020; color: #e08080; }

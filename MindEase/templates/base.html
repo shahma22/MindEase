@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <title>MindEase — {% block title %}Wellness{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <nav>
+    <span class="nav-brand">MindEase 💚</span>
+    <ul class="nav-links">
+      <li><a href="/">🏠 Home</a></li>
+      <li><a href="/chat">🤖 AI Chat</a></li>
+      <li><a href="/analytics">📈 Analytics</a></li>
+      <li><a href="/wellness">🧠 Wellness</a></li>
+      <li><a href="/mood">😊 Mood</a></li>
+      <li><a href="/journal">📓 Journal</a></li>
+      <li><a href="/resources">💡 Resources</a></li>
+      <li><a href="/breathing">🌬️ Breathing</a></li>
+      <li><a href="/about">ℹ️ About</a></li>
+    </ul>
+
+    <!-- Dark mode toggle -->
+    <button id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode"
+      style="background:none; border:2px solid var(--border); border-radius:50px;
+             padding:0.35rem 0.9rem; cursor:pointer; font-size:0.9rem;
+             color:var(--text-light); font-family:'Poppins',sans-serif;
+             transition:all 0.2s; white-space:nowrap;">
+      🌙 Dark
+    </button>
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>MindEase is not a substitute for professional mental health support.</p>
+    <p style="margin-top:0.4rem;">
+      🇦🇪 <strong>800-HOPE (4673)</strong> — free, 24/7 |
+      <strong>Emirates Health:</strong> 800-EHS |
+      <strong>DHA:</strong> 800-342
+    </p>
+    <p style="margin-top:0.4rem; font-size:0.8rem;">
+      © 2026 Shahma Mohammed Salih | SEC6201 Undergraduate Project
+    </p>
+  </footer>
+
+  <script>
+    // ── Dark Mode ────────────────────────────────────────────
+    function toggleDark() {
+      const html    = document.getElementById('html-root');
+      const btn     = document.getElementById('dark-toggle');
+      const isDark  = html.classList.toggle('dark');
+      btn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      localStorage.setItem('mindease-dark', isDark);
+    }
+
+    // Remember preference on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('mindease-dark');
+      if (saved === 'true') {
+        document.getElementById('html-root').classList.add('dark');
+        document.getElementById('dark-toggle').textContent = '☀️ Light';
+      }
+    });
+  </script>
+
+</body>
+</html>

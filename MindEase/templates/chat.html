@@ -1,0 +1,358 @@
+{% extends "base.html" %}
+{% block title %}AI Chat{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <div class="page-header">
+    <h1>🤖 MindEase AI Chat</h1>
+    <p>Have a real conversation with your AI wellness companion.</p>
+  </div>
+
+  <!-- How AI works info -->
+  <div style="background:var(--primary-lt); border:1px solid var(--border);
+              border-radius:var(--radius); padding:1rem 1.5rem;
+              margin-bottom:1.5rem; font-size:0.9rem; color:var(--text-light);">
+    🧠 <strong>How the AI works:</strong>
+    TextBlob analyses your message and assigns a polarity score from -1.0 to +1.0.
+    Fuzzy logic classifies this into 5 levels — Very Negative, Negative, Neutral,
+    Positive, Very Positive. Keywords like "exam" or "sleep" trigger topic-specific responses.
+    If Very Negative is detected 2 times in a row, a crisis alert appears automatically.
+  </div>
+
+  <!-- Chat Window -->
+  <div id="chat-window" style="
+    background   : var(--white);
+    border-radius: var(--radius);
+    border       : 1px solid var(--border);
+    box-shadow   : var(--shadow-md);
+    height       : 460px;
+    overflow-y   : auto;
+    padding      : 1.5rem;
+    margin-bottom: 1rem;
+    display      : flex;
+    flex-direction: column;
+    gap          : 1rem;
+  ">
+    <div class="bubble-row bot-row">
+      <div class="avatar bot-avatar">🤖</div>
+      <div class="bubble bot-bubble">
+        Hi there! I am your MindEase AI companion. 💚
+        <br/><br/>
+        I am here to listen and support you. How are you feeling today?
+        You can talk to me about anything — stress, exams, sleep, relationships,
+        or just how your day is going.
+      </div>
+    </div>
+  </div>
+
+  <!-- Crisis Alert Box (hidden by default) -->
+  <div id="crisis-alert-box" style="display:none;
+    background   : linear-gradient(135deg, #fef0f0, #fde8e8);
+    border       : 2px solid #f5a0a0;
+    border-radius: 14px;
+    padding      : 1.5rem;
+    margin-bottom: 1rem;
+    animation    : fadeSlideUp 0.4s ease;">
+    <div style="display:flex; align-items:flex-start; gap:1rem;">
+      <span style="font-size:2rem; flex-shrink:0;">🆘</span>
+      <div>
+        <div style="font-weight:800; color:#c0504d; font-size:1rem; margin-bottom:0.5rem;">
+          You may need additional support right now
+        </div>
+        <p style="font-size:0.9rem; color:#7a3030; line-height:1.7; margin-bottom:1rem;">
+          MindEase has noticed you have been expressing very difficult feelings.
+          Please consider reaching out to a professional who can really help.
+          You are not alone and support is available right now.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:0.4rem; margin-bottom:1rem;">
+          <div style="font-size:0.9rem; font-weight:700; color:#c0504d;">
+            🇦🇪 UAE Crisis Support — free, 24/7:
+          </div>
+          <div style="font-size:0.9rem; color:#7a3030;">
+            📞 <strong>800-HOPE (4673)</strong> — National Mental Health Helpline
+          </div>
+          <div style="font-size:0.9rem; color:#7a3030;">
+            📞 <strong>800-EHS (347)</strong> — Emirates Health Services
+          </div>
+          <div style="font-size:0.9rem; color:#7a3030;">
+            📞 <strong>800-342</strong> — Dubai Health Authority
+          </div>
+        </div>
+        <button onclick="document.getElementById('crisis-alert-box').style.display='none'"
+          style="padding:0.4rem 1rem; border-radius:8px; border:none;
+                 background:#f5c6c6; color:#c0504d; font-family:'Poppins',sans-serif;
+                 font-weight:600; cursor:pointer; font-size:0.85rem;">
+          I understand — dismiss
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sentiment Analysis Bar (hidden until first message) -->
+  <div id="sentiment-bar" style="display:none; margin-bottom:1rem;">
+    <div style="background:var(--white); border:1px solid var(--border);
+                border-radius:var(--radius-sm); padding:0.85rem 1.25rem;
+                display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+      <span style="font-weight:700; font-size:0.88rem; color:var(--text-light);">
+        🧠 AI Analysis:
+      </span>
+      <span id="fuzzy-badge" style="padding:0.3rem 0.9rem; border-radius:50px;
+            font-size:0.82rem; font-weight:700;
+            background:var(--primary-lt); color:var(--primary);">
+      </span>
+      <span id="polarity-display" style="font-size:0.82rem; color:var(--text-light);"></span>
+      <span id="keyword-display"  style="font-size:0.82rem; color:var(--text-light);"></span>
+      <span id="streak-display"   style="font-size:0.82rem; color:#c0504d; font-weight:600;"></span>
+    </div>
+
+    <!-- Fuzzy scale -->
+    <div style="margin-top:0.6rem; background:var(--white); border:1px solid var(--border);
+                border-radius:var(--radius-sm); padding:0.75rem 1.25rem;">
+      <p style="font-size:0.78rem; color:var(--text-light); margin-bottom:0.5rem; font-weight:600;">
+        Fuzzy Logic Sentiment Scale:
+      </p>
+      <div style="display:flex; gap:0.4rem;">
+        <div id="level-1" class="fuzzy-level">🫂 Very Negative</div>
+        <div id="level-2" class="fuzzy-level">💙 Negative</div>
+        <div id="level-3" class="fuzzy-level">🌿 Neutral</div>
+        <div id="level-4" class="fuzzy-level">😊 Positive</div>
+        <div id="level-5" class="fuzzy-level">🌟 Very Positive</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div style="display:flex; gap:0.75rem; align-items:flex-end;">
+    <textarea
+      id="user-input"
+      rows="2"
+      placeholder="Type how you are feeling... (Enter to send, Shift+Enter for new line)"
+      style="flex:1; padding:0.9rem 1.1rem; border:2px solid var(--border);
+             border-radius:var(--radius-sm); font-family:'Poppins',sans-serif;
+             font-size:0.95rem; resize:none; outline:none;
+             background:var(--bg); color:var(--text);
+             transition:border-color 0.2s;"
+      onkeydown="handleKey(event)"
+    ></textarea>
+    <button onclick="sendMessage()" class="btn btn-primary"
+      style="height:52px; padding:0 1.5rem; flex-shrink:0;">
+      Send →
+    </button>
+  </div>
+
+  <div style="text-align:right; margin-top:0.75rem;">
+    <button onclick="clearChat()" class="btn btn-danger btn-sm">
+      🗑 Clear Conversation
+    </button>
+  </div>
+
+</div>
+
+<style>
+  .bubble-row {
+    display    : flex;
+    align-items: flex-start;
+    gap        : 0.75rem;
+    animation  : fadeSlideUp 0.3s ease;
+  }
+  .bot-row  { flex-direction: row; }
+  .user-row { flex-direction: row-reverse; }
+
+  .avatar {
+    width          : 40px;
+    height         : 40px;
+    border-radius  : 50%;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    font-size      : 1.2rem;
+    flex-shrink    : 0;
+  }
+  .bot-avatar  { background: var(--primary-lt); }
+  .user-avatar { background: #e8f0fe; }
+
+  .bubble {
+    max-width    : 75%;
+    padding      : 0.9rem 1.2rem;
+    border-radius: 18px;
+    font-size    : 0.95rem;
+    line-height  : 1.7;
+  }
+  .bot-bubble {
+    background            : var(--primary-lt);
+    border                : 1px solid var(--border);
+    border-top-left-radius: 4px;
+    color                 : var(--text);
+  }
+  .user-bubble {
+    background             : linear-gradient(135deg, var(--primary), #0ea5e9);
+    color                  : white;
+    border-top-right-radius: 4px;
+  }
+
+  .fuzzy-level {
+    flex         : 1;
+    text-align   : center;
+    padding      : 0.4rem 0.25rem;
+    border-radius: 8px;
+    font-size    : 0.72rem;
+    font-weight  : 600;
+    background   : var(--bg);
+    border       : 2px solid var(--border);
+    color        : var(--text-light);
+    transition   : all 0.3s ease;
+  }
+  .fuzzy-level.active {
+    background  : var(--primary);
+    border-color: var(--primary-dk);
+    color       : white;
+    transform   : scale(1.08);
+  }
+
+  .typing-indicator {
+    display      : flex;
+    gap          : 4px;
+    padding      : 0.75rem 1rem;
+    background   : var(--primary-lt);
+    border-radius: 18px;
+    border-top-left-radius: 4px;
+    width        : fit-content;
+  }
+  .typing-dot {
+    width        : 8px;
+    height       : 8px;
+    border-radius: 50%;
+    background   : var(--primary);
+    animation    : typingBounce 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30%           { transform: translateY(-8px); }
+  }
+</style>
+
+<script>
+  const chatWindow = document.getElementById('chat-window');
+  const userInput  = document.getElementById('user-input');
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function addBubble(text, isUser) {
+    const row     = document.createElement('div');
+    row.className = `bubble-row ${isUser ? 'user-row' : 'bot-row'}`;
+    row.innerHTML = `
+      <div class="avatar ${isUser ? 'user-avatar' : 'bot-avatar'}">
+        ${isUser ? '🧑' : '🤖'}
+      </div>
+      <div class="bubble ${isUser ? 'user-bubble' : 'bot-bubble'}">
+        ${text}
+      </div>`;
+    chatWindow.appendChild(row);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  function showTyping() {
+    const row     = document.createElement('div');
+    row.className = 'bubble-row bot-row';
+    row.id        = 'typing-row';
+    row.innerHTML = `
+      <div class="avatar bot-avatar">🤖</div>
+      <div class="typing-indicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>`;
+    chatWindow.appendChild(row);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing-row');
+    if (t) t.remove();
+  }
+
+  function updateSentimentBar(data) {
+    document.getElementById('sentiment-bar').style.display = 'block';
+    document.getElementById('fuzzy-badge').textContent     =
+      data.fuzzy_emoji + ' ' + data.fuzzy_label;
+    document.getElementById('polarity-display').textContent =
+      'Polarity: ' + data.polarity;
+    document.getElementById('keyword-display').textContent  =
+      data.keyword ? '| Topic: ' + data.keyword : '';
+    document.getElementById('streak-display').textContent   =
+      data.consecutive_negative > 0
+        ? '⚠️ Negative streak: ' + data.consecutive_negative + '/2'
+        : '';
+
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById('level-' + i)
+        .classList.toggle('active', i === data.fuzzy_level);
+    }
+  }
+
+  async function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    addBubble(text, true);
+    userInput.value = '';
+    showTyping();
+
+    try {
+      const response = await fetch('/chat/send', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({ message: text })
+      });
+
+      const data = await response.json();
+
+      setTimeout(() => {
+        removeTyping();
+
+        if (data.error && !data.bot_response) {
+          addBubble('Sorry, something went wrong. Please try again.', false);
+          return;
+        }
+
+        addBubble(data.bot_response, false);
+        updateSentimentBar(data);
+
+        // Show or hide crisis alert
+        const crisisBox = document.getElementById('crisis-alert-box');
+        if (data.crisis_alert) {
+          crisisBox.style.display = 'block';
+          crisisBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+      }, 800);
+
+    } catch (err) {
+      removeTyping();
+      addBubble('Sorry, something went wrong. Please try again.', false);
+    }
+  }
+
+  async function clearChat() {
+    if (!confirm('Clear the conversation and start fresh?')) return;
+    await fetch('/chat/clear', { method: 'POST' });
+
+    const rows = chatWindow.querySelectorAll('.bubble-row');
+    rows.forEach((row, i) => { if (i > 0) row.remove(); });
+
+    document.getElementById('sentiment-bar').style.display       = 'none';
+    document.getElementById('crisis-alert-box').style.display    = 'none';
+    document.getElementById('streak-display').textContent        = '';
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Journal{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <div class="page-header">
+    <h1>📓 My Journal</h1>
+    <p>Your private space. Write freely — entries are saved only on your device.</p>
+  </div>
+
+  <div class="card">
+    <form method="POST" action="/journal">
+
+      {% if error %}
+        <div class="error-msg">⚠️ {{ error }}</div>
+      {% endif %}
+
+      <label for="content">Write your journal entry</label>
+      <textarea
+        id="content"
+        name="content"
+        rows="6"
+        placeholder="Today I felt... / Something that helped me was... / I am grateful for..."
+      ></textarea>
+
+      <p class="text-muted mt-1">
+        Tip: Even writing 3 sentences can help clear your mind. 🌿
+      </p>
+
+      <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Save Entry 💾</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="section-title">📖 Previous Entries</div>
+
+  {% if entries %}
+    {% for entry in entries %}
+    <div class="journal-entry fade-in">
+
+      <div class="journal-date">
+        📅 {{ entry.date }}
+      </div>
+
+      <div class="journal-text">{{ entry.content }}</div>
+
+      <div style="margin-top:1rem; text-align:right;">
+        <form method="POST" action="/journal/delete/{{ entry.id }}"
+              onsubmit="return confirm('Delete this journal entry?')">
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </div>
+
+    </div>
+    {% endfor %}
+
+  {% else %}
+    <div class="empty-state">
+      <span class="empty-icon">✍️</span>
+      <p>No journal entries yet.<br/>Start writing above — even a few sentences can help.</p>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

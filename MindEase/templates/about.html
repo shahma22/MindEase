@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <div class="page-header">
+    <h1>ℹ️ About MindEase</h1>
+    <p>An AI-powered mental wellness website built for university students.</p>
+  </div>
+
+  <div class="card">
+
+    <div style="margin-bottom:1.75rem;">
+      <h2 style="color:#4a9b8e; margin-bottom:0.75rem;">🎯 Project Aim</h2>
+      <p>MindEase was developed as part of the SEC6201 Undergraduate Project (BEng Software Engineering).
+      The aim is to provide a free, anonymous, AI-powered platform that supports student mental wellness
+      through journaling, mood tracking, sentiment analysis, and evidence-based resources.</p>
+    </div>
+
+    <div style="margin-bottom:1.75rem;">
+      <h2 style="color:#4a9b8e; margin-bottom:0.75rem;">⚙️ Technologies Used</h2>
+      <ul style="padding-left:1.1rem;">
+        <li><strong>Backend:</strong> Python Flask</li>
+        <li><strong>Sentiment Analysis:</strong> TextBlob</li>
+        <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+        <li><strong>Database:</strong> SQLite</li>
+      </ul>
+    </div>
+
+    <div style="margin-bottom:1.75rem;">
+      <h2 style="color:#4a9b8e; margin-bottom:0.75rem;">🤖 How the AI Works</h2>
+      <p>MindEase uses TextBlob to calculate a sentiment polarity score for your text.
+      The score ranges from -1.0 (very negative) to +1.0 (very positive).
+      Based on this score your mood is classified as Positive, Negative, or Neutral
+      and an appropriate supportive response is shown.</p>
+    </div>
+
+    <div style="margin-bottom:1.75rem;">
+      <h2 style="color:#4a9b8e; margin-bottom:0.75rem;">🔐 Ethical Considerations</h2>
+      <ul style="padding-left:1.1rem;">
+        <li>No account or personal data required — fully anonymous</li>
+        <li>Journal entries can be deleted at any time</li>
+        <li>MindEase is not a substitute for professional therapy</li>
+        <li>Crisis support contacts are visible on every page</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 style="color:#4a9b8e; margin-bottom:0.75rem;">👩‍💻 Developer</h2>
+      <p><strong>Shahma Mohammed Salih</strong><br/>
+      Student Number: 2527465<br/>
+      BEng (Hons) Software Engineering<br/>
+      SEC6201 Undergraduate Project — 2025/2026</p>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
